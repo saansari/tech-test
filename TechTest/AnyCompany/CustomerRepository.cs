@@ -11,23 +11,29 @@ namespace AnyCompany
         {
             Customer customer = new Customer();
 
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            connection.Open();
-
-            SqlCommand command = new SqlCommand("SELECT * FROM Customer WHERE CustomerId = " + customerId,
-                connection);
-            var reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                customer.Name = reader["Name"].ToString();
-                customer.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
-                customer.Country = reader["Country"].ToString();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT * FROM Customer WHERE CustomerId = " + customerId,
+                    connection);
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    customer.Name = reader["Name"].ToString();
+                    customer.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
+                    customer.Country = reader["Country"].ToString();
+                }
+
+                return customer;
             }
+            
+        }
 
-            connection.Close();
-
-            return customer;
+        public static Customer LoadAll()
+        {
+            return new List<Customer>();
         }
     }
 }

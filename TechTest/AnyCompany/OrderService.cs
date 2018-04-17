@@ -1,24 +1,33 @@
-﻿namespace AnyCompany
+﻿using AnyCompany.Interfaces;
+
+namespace AnyCompany
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
-        private readonly OrderRepository orderRepository = new OrderRepository();
+        private readonly IOrderRepository orderRepository;
+        private readonly IVATProvider vatProvider;
 
-        public bool PlaceOrder(Order order, int customerId)
+        public OrderService(IOrderRepository orderRepository, IVATProvider vatProvider)
         {
-            Customer customer = CustomerRepository.Load(customerId);
+            this.orderRepository = orderRepository;
+            this.vatProvider = vatProvider;
+        }
 
+        public bool PlaceOrder(Order order, string country)
+        {
             if (order.Amount == 0)
                 return false;
 
-            if (customer.Country == "UK")
-                order.VAT = 0.2d;
-            else
-                order.VAT = 0;
-
+            var vatValue = this.vatProvider.GetVAT(country);
+            order.VAT = vatValue;
             orderRepository.Save(order);
 
             return true;
+        }
+
+        public List<Order> GetOrders(List<int> orderIds)
+        {
+            return this.orderRepository.GetOrders(orderIds);
         }
     }
 }

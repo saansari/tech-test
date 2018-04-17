@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AnyCompany
 {
@@ -9,5 +10,10 @@ namespace AnyCompany
         public DateTime DateOfBirth { get; set; }
 
         public string Name { get; set; }
+
+        public List<int> OrderIds { get; set; }
+
+        //Can be in seperate file CQRS
+        public List<Order> OrderIds { get; set; }
     }
 }

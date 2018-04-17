@@ -1,25 +1,31 @@
 ﻿using System.Data.SqlClient;
+using AnyCompany.Interfaces;
 
 namespace AnyCompany
 {
-    internal class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private static string ConnectionString = @"Data Source=(local);Database=Orders;User Id=admin;Password=password;";
 
         public void Save(Order order)
         {
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            connection.Open();
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("INSERT INTO Orders VALUES (@OrderId, @Amount, @VAT)", connection);
 
-            SqlCommand command = new SqlCommand("INSERT INTO Orders VALUES (@OrderId, @Amount, @VAT)", connection);
+                command.Parameters.AddWithValue("@OrderId", order.OrderId);
+                command.Parameters.AddWithValue("@Amount", order.Amount);
+                command.Parameters.AddWithValue("@VAT", order.VAT);
 
-            command.Parameters.AddWithValue("@OrderId", order.OrderId);
-            command.Parameters.AddWithValue("@Amount", order.Amount);
-            command.Parameters.AddWithValue("@VAT", order.VAT);
+                command.ExecuteNonQuery();
+            }
+        }
 
-            command.ExecuteNonQuery();
-
-            connection.Close();
+        public List<Order> (List<int> orderIds)
+        {
+            return new List<Order>();
+            //Sql code to load orders
         }
     }
 }
