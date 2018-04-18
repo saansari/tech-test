@@ -1,6 +1,8 @@
+using AnyCompany.Interfaces;
+
 namespace AnyCompany
 {
-    internal class VATProvider : IVATProvider
+	public class VATProvider : IVATProvider
     {
         public double GetVAT(string country)
         {

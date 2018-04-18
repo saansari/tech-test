@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace AnyCompany.Interfaces
 {
-	public interface IOrderRepository
+	public interface IOrderService
 	{
-		void Save(Order order);
+		bool PlaceOrder(Order order, string country);
 		List<Order> GetOrders(List<int> orderIds);
 	}
 }

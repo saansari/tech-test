@@ -14,6 +14,6 @@ namespace AnyCompany
         public List<int> OrderIds { get; set; }
 
         //Can be in seperate file CQRS
-        public List<Order> OrderIds { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Collections.Generic;
 using AnyCompany.Interfaces;
 
 namespace AnyCompany
@@ -22,7 +23,7 @@ namespace AnyCompany
             }
         }
 
-        public List<Order> (List<int> orderIds)
+        public List<Order> GetOrders(List<int> orderIds)
         {
             return new List<Order>();
             //Sql code to load orders

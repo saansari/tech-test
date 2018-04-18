@@ -1,4 +1,5 @@
 using AnyCompany.Interfaces;
+using System.Collections.Generic;
 
 namespace AnyCompany
 {
@@ -7,7 +8,7 @@ namespace AnyCompany
         private readonly IOrderService orderService;
         private readonly ICustomerService customerService;
 
-        public OrderService(IOrderService orderService, ICustomerService customerService)
+        public CustomerOrderService(IOrderService orderService, ICustomerService customerService)
         {
             this.orderService = orderService;
             this.customerService = customerService;
